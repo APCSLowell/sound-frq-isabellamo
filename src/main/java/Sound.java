@@ -19,14 +19,16 @@ public class Sound{
     int count = 0;
     
     for (int i = 0; i < samples.length; i++) {
-      if (samples[i] > limit) {
-        samples[i] = limit;
-        count++;
-      } else if (samples[i] < (-1 * limit)) {
-        samples[i] = (-1 * limit);
-        count++;
-      }
+        int amplitude = Math.abs(samples[i]); // Calculate amplitude
+        if (amplitude > limit) {
+            if (samples[i] > 0)
+                samples[i] = limit; // Change positive values to limit
+            else
+                samples[i] = -limit; // Change negative values to -limit
+            count++;
+        }
     }
+    
     return count;
   }
 
@@ -38,21 +40,18 @@ public class Sound{
   public void trimSilenceFromBeginning() {
     /* to be implemented in part (b) */
 
-    int startInd = 0;
-
-    for (int i = 0; i < samples.length - 1; i++) {
-      if (samples[i] == 0 && samples[i + 1] != 0) {
-        startInd = i + 1;
-        break;
-      }
+    int firstNonZeroIndex = 0;
+    
+    // Find the index of the first non-zero element
+    while (firstNonZeroIndex < samples.length && samples[firstNonZeroIndex] == 0) {
+        firstNonZeroIndex++;
     }
-
-    int[] result = new int[samples.length - startInd];
-
-    for (int j = 0; j < result.length; j++) {
-      result[j] = samples[startInd];
-      startInd++;
-    }
-    samples = result;
+    
+    // Create a new array with non-zero elements
+    int[] trimmedSamples = new int[samples.length - firstNonZeroIndex];
+    System.arraycopy(samples, firstNonZeroIndex, trimmedSamples, 0, trimmedSamples.length);
+    
+    // Update the samples array reference
+    samples = trimmedSamples;
   }
 }
