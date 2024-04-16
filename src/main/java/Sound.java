@@ -1,6 +1,5 @@
 import java.util.*;
-public class Sound
-{
+public class Sound{
   /** the array of values in this sound; guaranteed not to be null */
   int[] samples;
 
@@ -23,7 +22,7 @@ public class Sound
       if (samples[i] > limit) {
         samples[i] = limit;
         count++;
-      } else if (samples[i] < (-1 * limit) {
+      } else if (samples[i] < (-1 * limit)) {
         samples[i] = (-1 * limit);
         count++;
       }
@@ -48,11 +47,12 @@ public class Sound
       }
     }
 
-    int[] result = new int[samples.length - i];
+    int[] result = new int[samples.length - startInd];
 
     for (int j = 0; j < result.length; j++) {
       result[j] = samples[startInd];
       startInd++;
     }
+    samples = result;
   }
 }
